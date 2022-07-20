@@ -1,0 +1,68 @@
+﻿@model Actor
+
+@{
+    ViewData["Title"] = "Delete Actor";
+}
+
+<div class="container pt-0">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="row">
+                <h3 class="text-center text-success">Delete confirmation for @Model.FullName</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 offset-2">
+
+                    <div class="form-group text-center">
+                        <img class="border-info rounded-circle" style="max-width:150px;" id="ProfilePictureURLPreview" />
+                    </div>
+
+                    <div class="form-goup my-2">
+                        <label asp-for="ProfilePictureURL" class="control-lable"></label>
+                        <input asp-for="ProfilePictureURL" class="form-control" readonly />
+                        <span asp-validation-for="ProfilePictureURL" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-goup my2">
+                        <label asp-for="FullName" class="control-lable"></label>
+                        <input asp-for="FullName" class="form-control" readonly />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-goup my-2">
+                        <label asp-for="Bio" class="control-lable"></label>
+                        <input asp-for="Bio" class="form-control" readonly />
+                        <span asp-validation-for="Bio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3 row">
+                        <div class="col-md-6">
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="submit" value="Confirm" class="btn btn-danger form-control"/>
+                            </form>                            
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-outline-secondary form-control" asp-action="Index">Show All</a>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    $(document).ready(function(){
+        var output = document.getElementById('ProfilePictureURLPreview');
+        output.src = $('#ProfilePictureURL').val();
+    })
+
+    $("#ProfilePictureURL").on("change",function(){
+       var output = document.getElementById('ProfilePictureURLPreview');
+       output.src = $(this).val();
+    })
+</script>
+}

@@ -1,0 +1,61 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "All orders";
+}
+
+<div class="">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <p>
+                <h4>List of all your orders</h4>
+            </p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Order Id</th>
+                        <th class="text-center">Items</th>
+                        <th class="text-center">Total</th>
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th class="text-center">User</th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="align-middle text-center">@order.Id</td>
+                            <td class="align-middle">
+                                <ul style="list-style-type:none">
+                                    @foreach (var item in order.OrderItems)
+                                    {
+                                        <li>
+                                            <div class="alert alert-info" role="alert">
+                                                <span class="badge bg-success">@item.Amount</span>[@item.Price.ToString("c")] - @item.Movie.Name
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="align-middle text-center">
+                                @order.OrderItems.Select(m => m.Movie.Price * m.Amount).Sum().ToString("c")
+                            </td>
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <td class="align-middle text-center"> @order.User.FullName </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
